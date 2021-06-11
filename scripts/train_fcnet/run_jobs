@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --partition=p100
+#SBATCH --gres=gpu:1
+#SBATCH --mem=10G
+#SBATCH --array=0-20%8
+#SBATCH --output="slogs/slurm-%A_%a.out"
+#SBATCH -c 2
+
+IFS=$'\n' read -d '' -r -a lines < jobs.sh
+echo "Starting task $SLURM_ARRAY_TASK_ID: ${lines[SLURM_ARRAY_TASK_ID]}"
+eval ${lines[SLURM_ARRAY_TASK_ID]}
