@@ -29,3 +29,4 @@ def corrupt_dataset_labels(loader, random_label_proportion):
                                                             size=targets.shape[0]).astype(np.long))
     new_targets = use_random_label * torch.randint(0, 10, targets.shape) + (1 - use_random_label) * targets
     loader.dataset.targets = new_targets
+    return use_random_label

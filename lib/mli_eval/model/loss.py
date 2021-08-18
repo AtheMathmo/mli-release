@@ -66,3 +66,22 @@ class EvalAutoencoderLoss(EvalLossFn, nn.Module):
             "loss": loss,
             "n": inputs.shape[0]
         }
+
+
+class EvalMSELoss(EvalLossFn, nn.Module):
+    def __init__(self, reduction="sum"):
+        super(EvalMSELoss, self).__init__()
+        self.reduction = reduction
+
+    def forward(self, inputs, logits, targets):
+        loss = F.mse_loss(
+          logits.view(inputs.shape[0], -1),
+          targets.view(inputs.shape[0], -1),
+          reduction=self.reduction
+        )
+        if self.reduction != "none":
+            loss = loss.item()
+        return {
+            "loss": loss,
+            "n": inputs.shape[0]
+        }

@@ -40,6 +40,8 @@ def eval_model_per_example(model, loader, loss=None, cuda=True, max_batches=None
           logits = model(x)
           metrics = loss(x, logits, y)
           for k in metrics:
+              if k == 'n':
+                  continue
               if k not in all_metrics:
                   all_metrics[k] = []
               all_metrics[k].extend(metrics[k].cpu().numpy())

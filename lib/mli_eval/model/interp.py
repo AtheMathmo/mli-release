@@ -42,7 +42,7 @@ def interp_networks_eval_examples(model, init_state, final_state, train_loader, 
         interpolate_state(model.state_dict(), init_state, final_state, alpha)
         if model.use_batchnorm:
             warm_bn(model, train_loader, cuda)
-        metrics, logits = eval_model_per_example(model, eval_loader, cuda)
+        metrics, logits = eval_model_per_example(model, eval_loader, cuda=cuda)
         for k in metrics:
             if k not in all_metrics:
                 all_metrics[k] = []
